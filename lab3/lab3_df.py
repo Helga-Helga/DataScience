@@ -31,7 +31,7 @@ def active_power():
     df1 = df[df['Global_active_power'] > 5]
     print df1[:5]
 
-#active_power()
+active_power()
 
 def voltage():
     df = read_frame()
@@ -40,3 +40,11 @@ def voltage():
     print df1[:5]
 
 voltage()
+
+def intensity():
+    df = read_frame()
+    print 'Households with Global_intensity in range from 19 to 20 A and where washer and fridge comsump more than boiler and the conditioner'
+    df1 = df[(df['Global_intensity'] > 19) & (df['Global_intensity'] < 20) & (df['Sub_metering_2'] > df['Sub_metering_3'])]
+    print df1[:5]
+
+intensity()
