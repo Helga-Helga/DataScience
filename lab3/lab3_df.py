@@ -1,4 +1,5 @@
 import csv
+import pandas as pd
 
 def clean_data():
 
@@ -18,8 +19,6 @@ def clean_data():
 
 clean_data()
 
-import pandas as pd
-
 def read_frame():
     path = './household_power_consumption_clean.csv'
     df = pd.read_csv(path, index_col=False, header=8, delimiter=';',
@@ -32,4 +31,12 @@ def active_power():
     df1 = df[df['Global_active_power'] > 5]
     print df1[:5]
 
-active_power()
+#active_power()
+
+def voltage():
+    df = read_frame()
+    print 'Households with Voltage more than 235 V'
+    df1 = df[df['Voltage'] > 235]
+    print df1[:5]
+
+voltage()
