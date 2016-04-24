@@ -3,22 +3,21 @@ from spyre import server
 import pandas as pd
 import urllib2
 import matplotlib.pyplot as plt
-import numpy as np
 
 class StockExample(server.App):
   title = "Inputs"
 
-  inputs = [{     "type":'dropdown',
-                  "label": 'Index  ', 
-                  "options" : [ {"label": "VCI", "value":"VCI"},
+  inputs = [{   "type":'dropdown',
+                "label": 'Index  ',
+                "options" : [ {"label": "VCI", "value":"VCI"},
                                 {"label": "TCI", "value":"TCI"},
                                 {"label": "VHI", "value":"VHI"},],
-                  "key": 'index', 
-                  "action_id": "update_data"},
+                "key": 'index',
+                "action_id": "update_data"},
 
-              {     "type":'dropdown',
-                    "label": 'Region', 
-                    "options" : [ {"label": "Vinnitsya", "value":"01"},
+              { "type":'dropdown',
+                "label": 'Region',
+                "options" : [ {"label": "Vinnitsya", "value":"01"},
                                   {"label": "Volyn", "value":"02"},
                                   {"label": "Dnipropetrovsk", "value":"03"},
                                   {"label": "Donetsk", "value":"04"},
@@ -45,8 +44,8 @@ class StockExample(server.App):
                                   {"label": "Crimea", "value":"25"},
                                   {"label": "Kiev City", "value":"26"},
                                   {"label": "Sevastopol", "value":"27"}],
-                    "key": 'region', 
-                    "action_id": "update_data"},
+                "key": 'region',
+                "action_id": "update_data"},
 
               { "input_type":"text",
                 "variable_name":"year",
@@ -56,33 +55,33 @@ class StockExample(server.App):
                 "action_id":"update_data"},
 
               { "type":'slider',
-                "label": 'First week', 
+                "label": 'First week',
                 "min" : 1,"max" : 52,"value" : 35,
-                "key": 'first', 
+                "key": 'first',
                 "action_id": 'update_data'},
 
               { "type":'slider',
-                "label": 'Last week', 
+                "label": 'Last week',
                 "min" : 1,"max" : 52,"value" : 35,
-                "key": 'last', 
+                "key": 'last',
                 "action_id": 'update_data'},
 
               { "type":'slider',
-                "label": 'Percent of area', 
+                "label": 'Percent of area',
                 "min" : 0,"max" : 100,"value" : 0,
-                "key": 'percent', 
+                "key": 'percent',
                 "action_id": 'update_data'},
 
               { "type":'slider',
-                "label": 'Minimum VHI', 
+                "label": 'Minimum VHI',
                 "min" : 0,"max" : 100,"value" : 0,
-                "key": 'minimum', 
+                "key": 'minimum',
                 "action_id": 'update_data'},
-                
+
               { "type":'slider',
-                "label": 'Maximum VHI', 
+                "label": 'Maximum VHI',
                 "min" : 0,"max" : 100,"value" : 100,
-                "key": 'maximum', 
+                "key": 'maximum',
                 "action_id": 'update_data'},]
 
   controls = [{   "type" : "hidden",
@@ -110,9 +109,9 @@ class StockExample(server.App):
     first = params['first']
     last = params['last']
 
-    path = '/home/helga/ipt/proga/lab1/clean_data/06_03_5pm{}.csv'.format(region)
+    path = '../lab1/clean_data/06_03_5pm{}.csv'.format(region)
 
-    df = pd.read_csv(path, index_col=False, header=True, 
+    df = pd.read_csv(path, index_col=False, header=9,
                      names=['year', 'week', 'SMN', 'SMT', 'VCI', 'TCI', 'VHI', 'VHI<15', 'VHI<35'])
     df1 = df[(df['year'] == int(year)) & (df['week'] >= int(first)) & (df['week'] <= int(last))]
     df1 = df1[['week', index]]
@@ -126,10 +125,10 @@ class StockExample(server.App):
     df = self.getData(params).set_index('week')
     plt_obj = df.plot()
     plt_obj.set_ylabel(index)
-    plt_obj.set_title('Index {index} for {year} from {first} to {last} weeks'.format(index=index, 
+    plt_obj.set_title('Index {index} for {year} from {first} to {last} weeks'.format(index=index,
       year=int(year), first=int(first), last=int(last)))
     fig = plt_obj.get_figure()
-    return fig 
+    return fig
 
   def getHTML(self, params):
     region = params['region']
@@ -137,13 +136,13 @@ class StockExample(server.App):
     maximum = params['maximum']
     percent = params['percent']
 
-    path = '/home/helga/ipt/proga/lab1/clean_data/06_03_5pm{}.csv'.format(region)
-    df = pd.read_csv(path, index_col=False, header=True, 
+    path = '../lab1/clean_data/06_03_5pm{}.csv'.format(region)
+    df = pd.read_csv(path, index_col=False, header=9,
                      names=['year', 'week', 'SMN', 'SMT', 'VCI', 'TCI', 'VHI', 'VHI<15', 'VHI<35'])
     df1 = df[(df['VHI'] < int(maximum)) & (df['VHI'] > int(minimum)) & (df['VHI<15'] > int(percent))]
     df1 = df1[['year', 'VHI', 'VHI<15']]
-    return 'Years with percent of area > {percent} with drought: {years}'.format(percent=int(percent), 
+    return 'Years with percent of area > {percent} with drought: {years}'.format(percent=int(percent),
       years = pd.unique(df1.year.ravel()))
 
 app = StockExample()
-app.launch()
+app.launch(host='0.0.0.0')
