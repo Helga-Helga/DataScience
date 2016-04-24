@@ -17,3 +17,13 @@ def clean_data():
                 f.writerow(line)
 
 clean_data()
+
+import pandas as pd
+
+def read_frame():
+    path = './household_power_consumption_clean.csv'
+    df = pd.read_csv(path, index_col=False, header=8, delimiter=';',
+                     names=['Date', 'Global_active_power', 'Global_reactive_power', 'Voltage', 'Global_intensity', 'Sub_metering_1', 'Sub_metering_2', 'Sub_metering_3'])
+    print df[:5]
+
+read_frame()
