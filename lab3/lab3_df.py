@@ -31,7 +31,7 @@ def active_power():
     df1 = df[df['Global_active_power'] > 5]
     print df1[:5]
 
-active_power()
+#active_power()
 
 def voltage():
     df = read_frame()
@@ -39,7 +39,7 @@ def voltage():
     df1 = df[df['Voltage'] > 235]
     print df1[:5]
 
-voltage()
+#voltage()
 
 def intensity():
     df = read_frame()
@@ -48,3 +48,13 @@ def intensity():
     print df1[:5]
 
 intensity()
+
+def average_consumption():
+    df = read_frame()
+    print '500000 randow households with average consumption found'
+    df = df.drop_duplicates(keep=False)
+    df = df.sample(n=500000)
+    df['Average'] = (df['Sub_metering_1'] + df['Sub_metering_2'] + df['Sub_metering_3'])/3
+    print df[:5]
+
+average_consumption()
