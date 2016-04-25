@@ -12,6 +12,16 @@ def active_power():
     array = read_array()
     print 'Households with Global_active_power more than 5 kW'
     array = array[array[:,2] > 5]
+    np.set_printoptions(edgeitems=9)
     print array
 
 active_power()
+
+def voltage():
+    array = read_array()
+    print 'Households with Voltage more than 235 V'
+    array = array[array[:,4] > 235]
+    np.set_printoptions(edgeitems=9)
+    print array
+
+voltage()
