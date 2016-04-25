@@ -25,3 +25,12 @@ def voltage():
     print array
 
 voltage()
+
+def intensity():
+    array = read_array()
+    print 'Households with Global_intensity in range from 19 to 20 A and where washer and fridge comsump more than boiler and the conditioner'
+    array = array[(array[:,5] > 19) & (array[:,5] < 20) & (array[:,7] > array[:,8])]
+    np.set_printoptions(edgeitems=9)
+    print array
+
+intensity()
