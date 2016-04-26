@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import random
 
 def read_array():
     path = './household_power_consumption_clean.csv'
@@ -32,5 +33,24 @@ def intensity():
     array = array[(array[:,5] > 19) & (array[:,5] < 20) & (array[:,7] > array[:,8])]
     np.set_printoptions(edgeitems=9)
     print array
-
 intensity()
+
+def unique(a):
+    order = np.lexsort(a.T)
+    a = a[order]
+    diff = np.diff(a, axis=0)
+    ui = np.ones(len(a), 'bool')
+    ui[1:] = (diff != 0).any(axis=1)
+    return a[ui]
+
+def average_consumption():
+    array = read_array()
+    print '500000 random households with average consumption found'
+    array = array[np.random.randint(array.shape[0],size=50000), :]
+    average = np.array((array[:,6] + array[:,7]  + array[:,8])/3)
+    average = average.reshape((50000,1))
+    array = np.concatenate((array, average), axis=1)
+    np.set_printoptions(edgeitems=9)
+    print array
+
+average_consumption()
