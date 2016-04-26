@@ -35,14 +35,6 @@ def intensity():
     print array
 intensity()
 
-def unique(a):
-    order = np.lexsort(a.T)
-    a = a[order]
-    diff = np.diff(a, axis=0)
-    ui = np.ones(len(a), 'bool')
-    ui[1:] = (diff != 0).any(axis=1)
-    return a[ui]
-
 def average_consumption():
     array = read_array()
     print '500000 random households with average consumption found'
