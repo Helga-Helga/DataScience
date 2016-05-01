@@ -1,6 +1,9 @@
 import csv
 import pandas as pd
-import datetime
+from cProfile import Profile
+from pstats import Stats
+
+profile = Profile()
 
 def clean_data():
 
@@ -18,7 +21,10 @@ def clean_data():
                     continue
                 f.writerow(line)
 
+profile.enable()
 clean_data()
+profile.disable()
+Stats(profile).sort_stats('time').print_stats()
 
 def read_frame():
     path = './household_power_consumption_clean.csv'
@@ -42,23 +48,27 @@ def voltage():
 
 voltage()
 
+
 def intensity():
     df = read_frame()
     print 'Households with Global_intensity in range from 19 to 20 A and where washer and fridge comsump more than boiler and the conditioner'
     df1 = df[(df['Global_intensity'] > 19) & (df['Global_intensity'] < 20) & (df['Sub_metering_2'] > df['Sub_metering_3'])]
     print df1[:5]
 
+
 intensity()
+
 
 def average_consumption():
     df = read_frame()
-    print '500000 randow households with average consumption found'
+    print '500000 random unique households with average consumption found'
     df = df.drop_duplicates(keep=False)
     df = df.sample(n=500000)
     df['Average'] = (df['Sub_metering_1'] + df['Sub_metering_2'] + df['Sub_metering_3'])/3
     print df[:5]
 
 average_consumption()
+
 
 def after_18():
     df = read_frame()
