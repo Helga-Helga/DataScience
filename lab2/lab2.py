@@ -87,22 +87,26 @@ class StockExample(server.App):
   controls = [{   "type" : "hidden",
                   "id" : "update_data"}]
 
-  tabs = ["Plot", "Table", "Drought"]
+  tabs = ["Plot", "Table", "Drought", "Extremes"]
 
-  outputs = [{ "type" : "plot",
-                  "id" : "plot",
-                  "control_id" : "update_data",
-                  "tab" : "Plot"},
+  outputs = [{  "type" : "plot",
+                "id" : "plot",
+                "control_id" : "update_data",
+                "tab" : "Plot"},
               { "type" : "table",
-                "id" : "table_id",
+                "id" : "table",
                 "control_id" : "update_data",
                 "tab" : "Table"},
               { "type" : "html",
-                "id" : "html_id",
+                "id" : "drought",
                 "control_id" : "update_data",
-                "tab" : "Drought"}]
+                "tab" : "Drought"},
+              { "type" : "table",
+                "id" : "table1",
+                "control_id" : "update_data",
+                "tab" : "Extremes"}]
 
-  def getData(self, params):
+  def table(self, params):
     index = params['index']
     region = params['region']
     year = params['year']
@@ -122,7 +126,7 @@ class StockExample(server.App):
     year = params['year']
     first = params['first']
     last = params['last']
-    df = self.getData(params).set_index('week')
+    df = self.table(params).set_index('week')
     plt_obj = df.plot()
     plt_obj.set_ylabel(index)
     plt_obj.set_title('Index {index} for {year} from {first} to {last} weeks'.format(index=index,
@@ -130,7 +134,7 @@ class StockExample(server.App):
     fig = plt_obj.get_figure()
     return fig
 
-  def getHTML(self, params):
+  def drought(self, params):
     region = params['region']
     minimum = params['minimum']
     maximum = params['maximum']
@@ -143,6 +147,17 @@ class StockExample(server.App):
     df1 = df1[['year', 'VHI', 'VHI<15']]
     return 'Years with percent of area > {percent} with drought: {years}'.format(percent=int(percent),
       years = pd.unique(df1.year.ravel()))
+
+  def table1(self, params):
+      index = params['index']
+      region = params['region']
+      year = params['year']
+
+      path = '../lab1/clean_data/06_03_5pm{}.csv'.format(region)
+
+      df = pd.read_csv(path, index_col=False, header=9,
+                       names=['year', 'week', 'SMN', 'SMT', 'VCI', 'TCI', 'VHI', 'VHI<15', 'VHI<35'])
+      return df.loc[pd.concat((df.groupby(['year'])['VHI'].idxmax(), df.groupby(['year'])['VHI'].idxmin()))]
 
 app = StockExample()
 app.launch(host='0.0.0.0')
