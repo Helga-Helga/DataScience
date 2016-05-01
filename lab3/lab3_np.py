@@ -1,6 +1,10 @@
 import numpy as np
 import pandas as pd
 import random
+from cProfile import Profile
+from pstats import Stats
+
+profile = Profile()
 
 def read_array():
     path = './household_power_consumption_clean.csv'
@@ -16,7 +20,10 @@ def active_power():
     np.set_printoptions(edgeitems=9)
     print array
 
+profile.enable()
 active_power()
+profile.disable()
+Stats(profile).sort_stats('time').print_stats()
 
 def voltage():
     array = read_array()
@@ -46,3 +53,16 @@ def average_consumption():
     print array
 
 average_consumption()
+
+def after_18():
+    array = read_array()
+    print 'Households whete after 18:00 Global_active_power per minute is more than 5 kW, Sub_metering_2 is more than others, choosen every second result from first part and every fourth from second part'
+    array = array[(array[:,1] > '18:00:00') & (array[:,2] > 5) & (array[:,7] > array[:,6]) & (array[:,7] > array[:,8])]
+
+    array1 = array[:len(array)/2:2]
+    array2 = array[len(array)/2::4]
+    array = np.concatenate((array1, array2), axis=0)
+    np.set_printoptions(edgeitems=9)
+    print array
+
+after_18()
