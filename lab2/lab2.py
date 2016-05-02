@@ -87,7 +87,7 @@ class StockExample(server.App):
   controls = [{   "type" : "hidden",
                   "id" : "update_data"}]
 
-  tabs = ["Plot", "Table", "Drought", "Extremes"]
+  tabs = ["Plot", "Table", "Drought", "Extremes", "Size"]
 
   outputs = [{  "type" : "plot",
                 "id" : "plot",
@@ -104,7 +104,11 @@ class StockExample(server.App):
               { "type" : "table",
                 "id" : "table1",
                 "control_id" : "update_data",
-                "tab" : "Extremes"}]
+                "tab" : "Extremes"},
+              { "type" : "html",
+                "id" : "data_size",
+                "control_id" : "update_data",
+                "tab" : "Size"}]
 
   def table(self, params):
     index = params['index']
@@ -158,6 +162,16 @@ class StockExample(server.App):
       df = pd.read_csv(path, index_col=False, header=9,
                        names=['year', 'week', 'SMN', 'SMT', 'VCI', 'TCI', 'VHI', 'VHI<15', 'VHI<35'])
       return df.loc[pd.concat((df.groupby(['year'])['VHI'].idxmax(), df.groupby(['year'])['VHI'].idxmin()))]
+
+  def data_size(self, params):
+      region = params['region']
+      path = '../lab1/clean_data/06_03_5pm{}.csv'.format(region)
+
+      df = pd.read_csv(path, index_col=False, header=9,
+                       names=['year', 'week', 'SMN', 'SMT', 'VCI', 'TCI', 'VHI', 'VHI<15', 'VHI<35'])
+
+      return 'Size of dataframe: {size}'.format(size=df.shape)
+
 
 app = StockExample()
 app.launch(host='0.0.0.0')
