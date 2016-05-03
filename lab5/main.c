@@ -16,11 +16,18 @@ int destroyArray(Array *array) {
   return 0;
 }
 
+int fillArray(Array *array) {
+  int i = array->size;
+  while (i-- > 0) {
+    array->data[i] = rand();
+  }
+}
+
 int main() {
   Array *array = createArray(5);
   int i = array->size;
+  fillArray(array);
   while(i-- > 0) {
-    array->data[i] = rand();
     printf("%f\n", array->data[i]);
   }
   destroyArray(array);
