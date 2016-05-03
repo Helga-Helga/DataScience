@@ -23,12 +23,17 @@ int fillArray(Array *array) {
   }
 }
 
+int displayArray(Array *array) {
+  unsigned int i = array->size;
+  while (i-- > 0) {
+    printf("%f\n", array->data[i]);
+  }
+}
+
 int main() {
   Array *array = createArray(5);
   int i = array->size;
   fillArray(array);
-  while(i-- > 0) {
-    printf("%f\n", array->data[i]);
-  }
+  displayArray(array);
   destroyArray(array);
 }
