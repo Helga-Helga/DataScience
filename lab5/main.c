@@ -19,7 +19,7 @@ int destroyArray(Array *array) {
 int fillArray(Array *array) {
   int i = array->size;
   while (i-- > 0) {
-    array->data[i] = rand();
+    array->data[i] = (double)rand()/RAND_MAX;
   }
 }
 
@@ -30,10 +30,34 @@ int displayArray(Array *array) {
   }
 }
 
+double multiplyArrays(Array *a, Array *b) {
+  if (a == NULL || b == NULL) {
+    return 0;
+  }
+  if (a->size != b->size) {
+    return 0;
+  }
+  unsigned int i = a->size;
+  double c = 0;
+  while (i-- > 0) {
+    c += (a->data[i])*(b->data[i]);
+  }
+  return c;
+}
+
 int main() {
-  Array *array = createArray(5);
-  int i = array->size;
-  fillArray(array);
-  displayArray(array);
-  destroyArray(array);
+  Array *array_1 = createArray(5);
+  Array *array_2 = createArray(5);
+  fillArray(array_1);
+  fillArray(array_2);
+  printf("%s\n", "First array");
+  displayArray(array_1);
+  printf("%s\n", "Second array");
+  displayArray(array_2);
+  double result;
+  result = multiplyArrays(array_1, array_2);
+  printf("%s\n", "Result");
+  printf("%f\n", result);
+  destroyArray(array_1);
+  destroyArray(array_2);
 }
