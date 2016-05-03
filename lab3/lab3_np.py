@@ -9,7 +9,8 @@ profile = Profile()
 def read_array():
     path = './household_power_consumption_clean.csv'
     df = pd.read_csv(path, index_col=False, header=8, delimiter=';',
-                     names=['Date', 'Time', 'Global_active_power', 'Global_reactive_power', 'Voltage', 'Global_intensity', 'Sub_metering_1', 'Sub_metering_2', 'Sub_metering_3'])
+                     names=['Date', 'Time', 'Global_active_power', 'Global_reactive_power', 'Voltage',
+                     'Global_intensity', 'Sub_metering_1', 'Sub_metering_2', 'Sub_metering_3'])
     my_data = df.values
     return my_data
 
@@ -36,10 +37,12 @@ voltage()
 
 def intensity():
     array = read_array()
-    print 'Households with Global_intensity in range from 19 to 20 A and where washer and fridge comsump more than boiler and the conditioner'
+    print 'Households with Global_intensity in range from 19 to 20 A and where washer and fridge comsump' +
+    'more than boiler and the conditioner'
     array = array[(array[:,5] > 19) & (array[:,5] < 20) & (array[:,7] > array[:,8])]
     np.set_printoptions(edgeitems=9)
     print array
+
 intensity()
 
 def average_consumption():
@@ -56,8 +59,10 @@ average_consumption()
 
 def after_18():
     array = read_array()
-    print 'Households whete after 18:00 Global_active_power per minute is more than 5 kW, Sub_metering_2 is more than others, choosen every second result from first part and every fourth from second part'
-    array = array[(array[:,1] > '18:00:00') & (array[:,2] > 5) & (array[:,7] > array[:,6]) & (array[:,7] > array[:,8])]
+    print 'Households whete after 18:00 Global_active_power per minute is more than 5 kW, Sub_metering_2' +
+    'is more than others, choosen every second result from first part and every fourth from second part'
+    array = array[(array[:,1] > '18:00:00') & (array[:,2] > 5) & (array[:,7] > array[:,6]) &
+    (array[:,7] > array[:,8])]
 
     array1 = array[:len(array)/2:2]
     array2 = array[len(array)/2::4]
