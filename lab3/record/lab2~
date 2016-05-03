@@ -1,0 +1,171 @@
+﻿Script started on Sun 06 Mar 2016 01:21:19 PM EET
+helga@helga-K50ID:~/ipt/assembler/lab2$ gdb main
+GNU gdb (Ubuntu 7.7.1-0ubuntu5~14.04.2) 7.7.1
+Copyright (C) 2014 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "i686-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from main...done.
+(gdb) break 1
+Breakpoint 1 at 0x8048401: file main.s, line 1.
+(gdb) run
+Starting program: /home/helga/ipt/assembler/lab2/main 
+
+Breakpoint 1, main () at main.s:10
+warning: Source file is more recent than executable.
+10		movl a + 8, %eax
+(gdb) info registers
+eax            0x1	1
+ecx            0x9508aaed	-1794594067
+edx            0xbffff074	-1073745804
+ebx            0xb7fbf000	-1208225792
+esp            0xbffff04c	0xbffff04c
+ebp            0x0	0x0
+esi            0x0	0
+edi            0x0	0
+eip            0x8048401	0x8048401 <main>
+eflags         0x246	[ PF ZF IF ]
+cs             0x73	115
+ss             0x7b	123
+ds             0x7b	123
+es             0x7b	123
+fs             0x0	0
+gs             0x33	51
+(gdb) watch $eax
+Watchpoint 2: $eax
+(gdb) watch $ebx
+Watchpoint 3: $ebx
+(gdb) watch $ecx
+Watchpoint 4: $ecx
+(gdb) watch $edx
+Watchpoint 5: $edx
+(gdb) step
+Watchpoint 2: $eax
+
+Old value = 1
+New value = 27
+main () at main.s:11
+11		subl a, %eax
+(gdb) step
+Watchpoint 2: $eax
+
+Old value = 27
+New value = 6
+main () at main.s:12
+12		mull a + 4
+(gdb) step
+Watchpoint 2: $eax
+
+Old value = 6
+New value = 48
+Watchpoint 5: $edx
+
+Old value = -1073745804
+New value = 0
+main () at main.s:13
+13		movl %eax, %ebx
+(gdb) step
+Watchpoint 3: $ebx
+
+Old value = -1208225792
+New value = 48
+main () at main.s:15
+15		movl a, %eax
+(gdb) step
+Watchpoint 2: $eax
+
+Old value = 48
+New value = 21
+main () at main.s:16
+16		addl a + 4, %eax
+(gdb) step
+Watchpoint 2: $eax
+
+Old value = 21
+New value = 29
+main () at main.s:17
+17		subl a + 8, %eax
+(gdb) step
+Watchpoint 2: $eax
+
+Old value = 29
+New value = 2
+main () at main.s:19
+19		movl c1, %ecx
+(gdb) step
+Watchpoint 4: $ecx
+
+Old value = -1794594067
+New value = 25
+main () at main.s:20
+20		addl c2, %ecx
+(gdb) step
+Watchpoint 4: $ecx
+
+Old value = 25
+New value = 43
+main () at main.s:22
+22		movl a, %edx
+(gdb) step
+Watchpoint 5: $edx
+
+Old value = 0
+New value = 21
+main () at main.s:23
+23		not %edx
+(gdb) step
+Watchpoint 5: $edx
+
+Old value = 21
+New value = -22
+main () at main.s:24
+24		and a + 4, %edx
+(gdb) step
+Watchpoint 5: $edx
+
+Old value = -22
+New value = 8
+main () at main.s:25
+25		xor a, %edx
+(gdb) step
+Watchpoint 5: $edx
+
+Old value = 8
+New value = 29
+main () at main.s:26
+26		ret
+(gdb) info registers
+eax            0x2	2
+ecx            0x2b	43
+edx            0x1d	29
+ebx            0x30	48
+esp            0xbffff04c	0xbffff04c
+ebp            0x0	0x0
+esi            0x0	0
+edi            0x0	0
+eip            0x8048445	0x8048445 <main+68>
+eflags         0x206	[ PF IF ]
+cs             0x73	115
+ss             0x7b	123
+ds             0x7b	123
+es             0x7b	123
+fs             0x0	0
+gs             0x33	51
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 3033] will be killed.
+
+Quit anyway? (y or n) y
+helga@helga-K50ID:~/ipt/assembler/lab2$ exit
+
+Script done on Sun 06 Mar 2016 01:23:06 PM EET

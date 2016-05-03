@@ -1,0 +1,5 @@
+\select@language {ukrainian}
+\contentsline {chapter}{\numberline {1}\IeC {\CYRZ }\IeC {\cyra }\IeC {\cyrd }\IeC {\cyra }\IeC {\cyrn }\IeC {\cyri }\IeC {\cyre }}{3}{chapter.1}
+\contentsline {chapter}{\numberline {2}\IeC {\CYRP }\IeC {\cyrr }\IeC {\cyro }\IeC {\cyrt }\IeC {\cyro }\IeC {\cyrk }\IeC {\cyro }\IeC {\cyrl } \IeC {\cyrv }\IeC {\cyri }\IeC {\cyrk }\IeC {\cyro }\IeC {\cyrn }\IeC {\cyra }\IeC {\cyrn }\IeC {\cyrn }\IeC {\cyrya } \IeC {\cyrr }\IeC {\cyro }\IeC {\cyrb }\IeC {\cyro }\IeC {\cyrt }\IeC {\cyri }}{5}{chapter.2}
+\contentsline {chapter}{\IeC {\CYRV }\IeC {\cyri }\IeC {\cyrs }\IeC {\cyrn }\IeC {\cyro }\IeC {\cyrv }\IeC {\cyrk }\IeC {\cyri }}{6}{chapter*.2}
+\contentsfinish 

@@ -1,0 +1,20 @@
+\def\passYear{2016}
+\def\faculty{физико-технический институт}
+\def\department{Кафедра информационной безопасности}
+\def\departmentHead{Н. В. Грайворонский}
+\def\kind{Дипломна робота}
+\def\level{магістр}
+\def\specialityCode{8.04030101}
+\def\specialityTitle{Прикладная математика}
+\def\theme{Наука про данные: обмен результатами и начальный анализ}
+\def\gender{female}
+\def\mentorGender{male}
+\def\course{2}
+\def\group{ФИ-41}
+\def\name{Лавягина Ольга Алексеевна}
+\def\mentorRank{}
+\def\mentorName{Терещенко Иван Николаевич}
+\def\reviewerRank{Rank}
+\def\reviewerName{Name}
+\def\subject{Архитектура ЭВМ}
+
