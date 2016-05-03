@@ -6,3 +6,4 @@ struct Array {
 typedef struct Array Array;
 
 Array* createArray(unsigned int size);
+int destroyArray(Array *array);

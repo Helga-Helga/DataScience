@@ -10,11 +10,18 @@ Array *createArray(unsigned int size) {
   return a;
 }
 
+int destroyArray(Array *array) {
+  free(array->data);
+  free(array);
+  return 0;
+}
+
 int main() {
   Array *array = createArray(5);
   int i = array->size;
   while(i-- > 0) {
     array->data[i] = rand();
-    printf("%f\ns", array->data[i]);
+    printf("%f\n", array->data[i]);
   }
+  destroyArray(array);
 }
