@@ -1,7 +1,11 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <omp.h>
 
 #include "main.h"
+
+#define ARRAY_SIZE ((size_t)(1E8))
+double omp_get_wtime(void);
 
 Array *createArray(unsigned int size) {
   Array *a = (Array*)malloc(sizeof(Array));
@@ -34,20 +38,25 @@ double multiplyArrays(Array *a, Array *b) {
   if (a == NULL || b == NULL) {
     return 0;
   }
+
   if (a->size != b->size) {
     return 0;
   }
   unsigned int i = a->size;
   double c = 0;
-  while (i-- > 0) {
+
+  #pragma omp parallel for
+  for (i = 0; i < a->size; i++) {
     c += (a->data[i])*(b->data[i]);
   }
   return c;
 }
 
 int main() {
-  Array *array_1 = createArray(5);
-  Array *array_2 = createArray(5);
+  double t1, t2;
+
+  Array *array_1 = createArray(ARRAY_SIZE);
+  Array *array_2 = createArray(ARRAY_SIZE);
   fillArray(array_1);
   fillArray(array_2);
   printf("%s\n", "First array");
@@ -55,9 +64,12 @@ int main() {
   printf("%s\n", "Second array");
   displayArray(array_2);
   double result;
+  t1 = omp_get_wtime();
   result = multiplyArrays(array_1, array_2);
+  t2 = omp_get_wtime();
   printf("%s\n", "Result");
   printf("%f\n", result);
   destroyArray(array_1);
   destroyArray(array_2);
+  printf("%e\n", t2-t1);
 }
