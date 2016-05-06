@@ -45,7 +45,7 @@ double multiplyArrays(Array *a, Array *b) {
   unsigned int i = a->size;
   double c = 0;
 
-  #pragma omp parallel for
+  #pragma omp parallel for schedule(static, 64)
   for (i = 0; i < a->size; i++) {
     c += (a->data[i])*(b->data[i]);
   }
@@ -59,10 +59,10 @@ int main() {
   Array *array_2 = createArray(ARRAY_SIZE);
   fillArray(array_1);
   fillArray(array_2);
-  printf("%s\n", "First array");
-  displayArray(array_1);
-  printf("%s\n", "Second array");
-  displayArray(array_2);
+  //printf("%s\n", "First array");
+  //displayArray(array_1);
+  //printf("%s\n", "Second array");
+  //displayArray(array_2);
   double result;
   t1 = omp_get_wtime();
   result = multiplyArrays(array_1, array_2);
