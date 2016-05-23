@@ -21,11 +21,6 @@ def clean_data():
                     continue
                 f.writerow(line)
 
-profile.enable()
-clean_data()
-profile.disable()
-Stats(profile).sort_stats('time').print_stats()
-
 def read_frame():
     path = './household_power_consumption_clean.csv'
     df = pd.read_csv(path, index_col=False, header=8, delimiter=';',
@@ -39,28 +34,19 @@ def active_power():
     df1 = df[df['Global_active_power'] > 5]
     print df1[:5]
 
-active_power()
-
 def voltage():
     df = read_frame()
     print 'Households with Voltage more than 235 V'
     df1 = df[df['Voltage'] > 235]
     print df1[:5]
 
-voltage()
-
-
 def intensity():
     df = read_frame()
-    print 'Households with Global_intensity in range from 19 to 20 A and where washer and fridge comsump' +
+    print 'Households with Global_intensity in range from 19 to 20 A and where washer and fridge comsump' + \
     'more than boiler and the conditioner'
     df1 = df[(df['Global_intensity'] > 19) & (df['Global_intensity'] < 20) &
     (df['Sub_metering_2'] > df['Sub_metering_3'])]
     print df1[:5]
-
-
-intensity()
-
 
 def average_consumption():
     df = read_frame()
@@ -70,12 +56,9 @@ def average_consumption():
     df['Average'] = (df['Sub_metering_1'] + df['Sub_metering_2'] + df['Sub_metering_3'])/3
     print df[:5]
 
-average_consumption()
-
-
 def after_18():
     df = read_frame()
-    print 'Households whete after 18:00 Global_active_power per minute is more than 5 kW, Sub_metering_2' +
+    print 'Households whete after 18:00 Global_active_power per minute is more than 5 kW, Sub_metering_2' + \
     'is more than others, choosen every second result from first part and every fourth from second part'
     df = df[(df['Time'] > '18:00:00') & (df['Global_active_power'] > 5) &
     (df['Sub_metering_2'] > df['Sub_metering_1']) & (df['Sub_metering_2'] > df['Sub_metering_3'])]
@@ -85,4 +68,13 @@ def after_18():
     result = pd.concat(frames)
     print result[:5]
 
-after_18()
+if __name__ == '__main__':
+    profile.enable()
+    clean_data()
+    profile.disable()
+    Stats(profile).sort_stats('time').print_stats()
+    active_power()
+    voltage()
+    intensity()
+    average_consumption()
+    after_18()
